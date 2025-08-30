@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -25,12 +26,13 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 		return
 	}
 	feed, err := apiCfg.DB.CreatedFeed(r.Context(), db.CreatedFeedParams{
-		ID:        uuid.New(),
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		Name:      params.Name,
-		Url:       params.Url,
-		UserID:    user.ID,
+		ID:            uuid.New(),
+		CreatedAt:     time.Now(),
+		UpdatedAt:     time.Now(),
+		Name:          params.Name,
+		Url:           params.Url,
+		UserID:        user.ID,
+		Lastfetchedat: sql.NullTime{},
 	})
 	fmt.Println("feed name:", params.Name)
 	fmt.Println("feed url:", params.Url)

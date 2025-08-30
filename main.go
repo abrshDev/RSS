@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	db "github.com/abrshDev/RSS/internal/database"
 	"github.com/go-chi/chi"
@@ -19,7 +20,12 @@ type apiConfig struct {
 }
 
 func main() {
+	/* 	feed, err := urlToBeFetched("https://www.wagslane.dev/index.xml")
 
+	   	if err != nil {
+	   		fmt.Println("error:", err)
+	   	}
+	   	fmt.Println(feed) */
 	godotenv.Load()
 	portstring := os.Getenv("PORT")
 	dburl := os.Getenv("DB_URL")
@@ -38,6 +44,7 @@ func main() {
 	apicfg := apiConfig{
 		DB: queries,
 	}
+	go startScraping(queries, 10, time.Minute)
 	Router := chi.NewRouter()
 	Router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"}, // Allow all with https or http
