@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -39,4 +40,12 @@ func (apiCfg *apiConfig) handlerCreateUser(w http.ResponseWriter, r *http.Reques
 func (apiCfg *apiConfig) handleGetUserByApi(w http.ResponseWriter, r *http.Request, user db.User) {
 
 	RespondWithJson(w, 200, dbtodb(user))
+}
+
+func (apiCFG *apiConfig) handleGetPostUser(w http.ResponseWriter, r *http.Request, user db.User) {
+
+	posts, err := apiCFG.DB.GetPostsForUser(r.Context(), db.GetPostsForUserParams{user.ID, 2})
+	if err != nil {
+		log.Fatal("couldnot get post for user:", posts)
+	}
 }
