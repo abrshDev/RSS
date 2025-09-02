@@ -44,7 +44,8 @@ func (apiCfg *apiConfig) handleGetUserByApi(w http.ResponseWriter, r *http.Reque
 
 func (apiCFG *apiConfig) handleGetPostUser(w http.ResponseWriter, r *http.Request, user db.User) {
 
-	posts, err := apiCFG.DB.GetPostsForUser(r.Context(), db.GetPostsForUserParams{user.ID, 2})
+	posts, err := apiCFG.DB.GetPostsForUser(r.Context(), db.GetPostsForUserParams{
+		UserID: user.ID, Limit: 2})
 	if err != nil {
 		log.Fatal("couldnot get post for user:", posts)
 	}

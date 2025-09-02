@@ -33,6 +33,16 @@ type Feed struct {
 	Url       string    `json:"url"`
 	UserID    uuid.UUID `json:"userid"`
 }
+type Post struct {
+	ID           uuid.UUID `json:"id"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+	Title        string    `json:"title"`
+	Descrtiption *string   `json:"description"`
+	PublishedAt  string    `json:"published_at"`
+	Url          string    `json:"url"`
+	FeedID       uuid.UUID `json:"feed_id"`
+}
 
 func feedtofeed(feed db.Feed) Feed {
 	return Feed{
@@ -75,4 +85,29 @@ func dbfeedfollowtofeedfollow(feedfollow []db.FeedFollow) []FeedFollow {
 		feedfollows = append(feedfollows, feedfollowtofeedfollow(dbfeedfollow))
 	}
 	return feedfollows
+}
+
+func dbposttopost(post db.Post) Post {
+	var description *string
+	if post.Descrtiption.Valid {
+		description = &post.Descrtiption.String
+	}
+	return Post{
+		ID:           post.ID,
+		CreatedAt:    post.CreatedAt,
+		UpdatedAt:    post.UpdatedAt,
+		Title:        post.Title,
+		Descrtiption: description,
+		PublishedAt:  post.PublishedAt,
+		Url:          post.Url,
+		FeedID:       post.FeedID,
+	}
+}
+func dbslicetodbslice(dbpost []db.Post) []Post {
+	posts := []Post{}
+
+	for _, post := range dbpost {
+		posts = append(posts, dbposttopost(post))
+	}
+	return posts
 }
