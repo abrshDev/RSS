@@ -74,7 +74,7 @@ func scrapeFeed(dbs *db.Queries, wg *sync.WaitGroup, feed db.Feed) {
 				continue
 			}
 			log.Println("Failed to create post:", err)
-			fmt.Println("just tring smt")
+
 		}
 	}
 	log.Printf("log %s collected, %v posts found", feed.Name, len(rssfeed.Channel.Item))
