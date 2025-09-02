@@ -48,4 +48,6 @@ func (apiCFG *apiConfig) handleGetPostUser(w http.ResponseWriter, r *http.Reques
 	if err != nil {
 		log.Fatal("couldnot get post for user:", posts)
 	}
+	RespondWithJson(w, 200, dbslicetodbslice(posts))
+
 }
