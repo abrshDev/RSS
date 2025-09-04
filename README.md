@@ -12,7 +12,7 @@ Built in **Go**, using **Fast, lightweight chi router**, **PostgreSQL**, and **s
 - Background scraper fetches latest posts
 - Retrieve latest posts for the feeds you follow
 - JSON-based REST API with versioned routes (`/v1`)
-- 
+  
 
 ---
 
